@@ -1,0 +1,35 @@
+func _ready():
+    get_node("Button").connect("pressed", self, "_on_Button_pressed")
+
+
+   A common misunderstanding regarding this tutorial is how get_node(path) works. For a given node, get_node(path) searches its immediate children. In the above code, this means that Button must be a child of Panel. If Button were instead a child of Label, the code to obtain it would be:
+    get_node("Label/Button")
+
+func _process(delta):
+# Do something...
+pass
+
+extends Label
+
+var accum = 0
+
+func _process(delta):
+    accum += delta
+    text = str(accum) # 'text' is a built-in label property.
+
+    func _ready():
+    add_to_group("enemies")
+
+    It is also possible to get the full list of enemies nodes by calling SceneTree.get_nodes_in_group():
+
+    It is also possible to get the full list of enemies nodes by calling SceneTree.get_nodes_in_group():
+
+    func _someaction():
+    s.free() # Immediately removes the node from the scene and frees it.
+
+    func _someaction():
+    s.queue_free() # Removes the node from the scene and frees it when it becomes safe to do so.
+
+  func _ready():
+      s = Sprite.new() # Create a new sprite!
+      add_child(s) # Add it as a child of this node
