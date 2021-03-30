@@ -22,9 +22,9 @@ func rollDice():
 		var _num = randi() % 7
 		# check if indeed is BETWEEN 0 and 7, otherwise +1
 		# make node for dice, add to diceArr
-		var nodeName = "dice" + str(i)
-		s = Sprite.new()
-		add_child(s) # Add it as a child of this node
+		#var nodeName = "dice" + str(i)
+		#s = Sprite.new()
+		#add_child(s) # Add it as a child of this node
 		# set sprite to  string dicename = "Dice" + i.ToString();
 		# set background color to diceColorArr[i]
 

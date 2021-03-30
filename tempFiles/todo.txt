@@ -1,0 +1,4 @@
+in item list --> player  --> add scorecard spawn
+
+Richtextlabel (left container) replace with dice
+
