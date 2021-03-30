@@ -3,16 +3,15 @@ extends Node
 class_name Player # , "res://path/to/optional/icon.svg"
 
 func _init(_id, _name):
-	var id = _id
-	var name = _name
+	var _playerid = _id
+	var _playername = _name
+	var _scores = Scores.new()
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

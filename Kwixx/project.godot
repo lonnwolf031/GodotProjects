@@ -15,13 +15,13 @@ _global_script_classes=[ {
 "path": "res://script/Player.gd"
 }, {
 "base": "Node",
-"class": "Scorecard",
+"class": "Scores",
 "language": "GDScript",
-"path": "res://script/Scorecard.gd"
+"path": "res://script/Scores.gd"
 } ]
 _global_script_class_icons={
 "Player": "",
-"Scorecard": ""
+"Scores": ""
 }
 
 [application]

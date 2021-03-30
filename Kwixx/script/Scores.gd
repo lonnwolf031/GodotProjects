@@ -1,11 +1,11 @@
 extends Node
 
-class_name Scorecard
+class_name Scores
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 func _init():
-	var _score = 0
+	var _totalscore = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
