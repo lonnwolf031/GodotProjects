@@ -4,23 +4,38 @@ extends Control
 const _crown = preload("res://img/crown.png")
 
 #onready var _list = $HBoxContainer/VBoxContainer/ItemList
-onready var _tablist = $HBoxContainer/VBoxContainer/Tabs
-onready var _action = $HBoxContainer/VBoxContainer/Action
+onready var _tablist = $VBoxContainer/HBoxContainer/SubVBoxContainer/Tabs
+onready var _action = $VBoxContainer/HBoxContainer/SubVBoxContainer/Action
+onready var _rolldice = $VBoxContainer/DiceContainer/RollButton
+onready var _dicecontainer = $VBoxContainer/DiceContainer
+onready var dColorArr = ["purple", "blue", "orange", "yellow", "white", "white"]
 
 var _players = []
+var _playersDict = {}
 var _turn = -1
+var dice = {}
+
+var cPurple = Color("#8f02ed")
+var cBlue = Color("#02beed")
+var cOrange = Color("#ed4902")
+var cYellow = Color("#edbe02")
+var cWhite = Color("#ffffff")
+
+var diceColorArr = [cPurple, cBlue, cOrange, cYellow, cWhite, cWhite]
+
+var diceArr = []
+
+const NUMDICES = 6
 
 master func set_player_name(name):
 	var sender = get_tree().get_rpc_sender_id()
 	rpc("update_player_name", sender, name)
-
 
 sync func update_player_name(player, _name):
 	var pos = _players.find(player)
 	if pos != -1:
 		#_list.set_item_text(pos, name)
 		pass
-
 
 master func request_action(action):
 	var sender = get_tree().get_rpc_sender_id()
@@ -29,11 +44,48 @@ master func request_action(action):
 		return
 	do_action(action)
 	next_turn()
+	
+	var _dice = preload("res://img/side1.png")
+
+var _side1 = preload("res://img/side1.png")
+
+func loaddice():
+	for _side in range(1,7):
+		for _color in dColorArr:
+			var _dicename = str(_side) + _color
+			print(_dicename)
+			var _path = "res://img/side" + _dicename + ".png"
+			dice[_dicename] = load(_path)
+
+func rollDice():
+	diceArr.clear()
+	var _shuffledColorArr = shuffleList(dColorArr)
+	# range is inclusive, exclusive
+	for _numdice in range(1,7):
+		var _num = randi() % 6 + 1
+		# check if indeed is BETWEEN 0 and 7, otherwise +1
+		var _nodeName = "dice" + str(_numdice)
+		var _dice = _dicecontainer.find_node(_nodeName)
+		var _rolledDiceName = str(_num) + _shuffledColorArr[_numdice-1]
+		var _rolledDiceTextureName = "side" + _rolledDiceName
+		diceArr.append(_rolledDiceName)
+		_dice.texture = dice[_rolledDiceName]
+
+func shuffleList(list):
+	var shuffledList = []
+	var indexList = range(list.size())
+	for _i in range(list.size()):
+		var x = randi()%indexList.size()
+		shuffledList.append(list[x])
+		indexList.remove(x)
+		list.remove(x)
+	return shuffledList
 
 # HERE GOES ACTION WITH THE TURN
 sync func do_action(action):
 	# differntiate between sender and others for possible actions
 	# roll dice
+	rollDice()
 	#var name = _list.get_item_text(_turn)
 	var val = randi() % 100
 	rpc("_log", "%s: %ss %d" % [name, action, val])
@@ -67,33 +119,24 @@ sync func del_player(id):
 
 sync func add_player(id, name=""):
 	_players.append(id)
-	var _newPlayer = Player.new(id, name)
-	# append scorecards 
-	# on game start spawn all scorecards
-	#_scorecards[id] = load("res://scene/Scorecard.tscn")
-	
-	#var projectile = load("res://Projectile.tscn")
-	# when creating scene, foreach key in dict instance and add to tree
-	#var bullet = projectile.instance()
-	#add_child_below_node(get_tree().get_root().get_node("Game"),bullet)
-	
+	#var _newPlayer = Player.new(id, name)
+	var _newPlayer = preload("res://scene/Player.tscn")
+	var newPlayer = _newPlayer.instance()
+	_playersDict[id] = newPlayer
 	if name == "":
-		#_list.add_item("... connecting ...", null, false)
 		name = "unknown"
-	#else:
-		#_list.add_item(name, null, false)
-		_tablist.add_child(_newPlayer)
-	var _newPanel = Panel.new()
-	_newPanel.rect_size = Vector2(200, 200)  # <-- added this
-	_newPlayer.add_child(_newPanel)
-
-
-#func get_player_name(pos):
-	#if pos < _list.get_item_count():
-		#return _list.get_item_text(pos)
-	#else:
-		#return "Error!"
-
+	newPlayer.set_name(str(id))
+	var _newPanel = PanelContainer.new()
+	_newPanel.set_name(name)
+	_newPanel.set_size(Vector2(200, 200),false)  
+	_tablist.add_child(_newPanel)
+	_newPanel.add_child(newPlayer)
+	var _newScorecard = preload("res://scene/Scorecard.tscn")
+	var newScorecard = _newScorecard.instance()
+	newScorecard.set_name(str(id))
+	newScorecard.find_node("scorecard").set_expand(true)
+	newScorecard.find_node("scorecard").set_stretch_mode(5)
+	_newPanel.add_child(newScorecard)
 
 func next_turn():
 	_turn += 1
@@ -104,6 +147,7 @@ func next_turn():
 
 func start():
 	set_turn(0)
+	loaddice()
 
 
 func stop():
@@ -130,7 +174,7 @@ func on_peer_del(id):
 
 
 sync func _log(what):
-	$HBoxContainer/RichTextLabel.add_text(what + "\n")
+	$VBoxContainer/HBoxContainer/RichTextLabel.add_text(what + "\n")
 
 
 func _on_Action_pressed():

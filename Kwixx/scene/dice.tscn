@@ -12,11 +12,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="DiceContainer" type="MarginContainer" parent="."]
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="dice" type="Sprite" parent="StaticBody2D"]
+[node name="dice" type="TextureRect" parent="DiceContainer"]
 material = SubResource( 1 )
-scale = Vector2( 18, 18 )
-z_index = 1
+margin_right = 390.0
+margin_bottom = 390.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 texture = ExtResource( 1 )
+expand = true

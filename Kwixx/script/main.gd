@@ -11,11 +11,14 @@ onready var _disconnect_btn = $Panel/VBoxContainer/HBoxContainer2/HBoxContainer/
 onready var _name_edit = $Panel/VBoxContainer/HBoxContainer/NameEdit
 onready var _host_edit = $Panel/VBoxContainer/HBoxContainer2/Hostname
 onready var _game = $Panel/VBoxContainer/Game
+onready var _screen = $Panel
 
 var peer = null
 
 func _ready():
 	#warning-ignore-all:return_value_discarded
+	randomize()
+	#get_tree().set_screen_stretch( ... )
 	get_tree().connect("network_peer_disconnected", self, "_peer_disconnected")
 	get_tree().connect("network_peer_connected", self, "_peer_connected")
 	$AcceptDialog.get_label().align = Label.ALIGN_CENTER
