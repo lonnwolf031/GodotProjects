@@ -12,58 +12,62 @@ onready var _buttonContainerSizeOrig = _buttoncontainers[0].get_size()
 onready var _checkboxSizeOrig = _checkboxes[0].get_size()
 
 var toggled = {}
+var checkboxSizes = {}
+var containerSizesOrig = {}
+var containerPosOrig = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#for b in get_node("buttons").get_children():
-	for b in _checkboxes:
-		if b is Button:
-			b.connect("pressed", self, "_button_pressed",[b])
+	for _c in _checkboxes:
+		checkboxSizes[_c.get_name()] = _c.get_size()
+		if _c is Button:
+			_c.connect("pressed", self, "_button_pressed",[_c])
+	for _container in _buttoncontainers:
+		containerSizesOrig[_container.get_name()] = _container.get_size()
+		containerPosOrig[_container.get_name()] = _container.get_position()
+	#print(str(containerPosOrig))
+	print("scorecard is of type: ", str(_scorecardTxture))
+
 	#untoggle all childs of button container
-	
 	scale_reposition()
-	pass
+
 
 func scale_reposition():
 	var _scorecardSize = _scorecardTxture.get_size() #returns Vector2
-	var _newContainerXsize = _scorecardSize.x * _buttonContainerSizeOrig.x / _scorecardTxtureSizeOrig.x
-	var _newContainerYsize = _scorecardSize.y * _buttonContainerSizeOrig.y / _scorecardTxtureSizeOrig.y
 	for _container in _buttoncontainers:
+		var _newContainerXsize = _scorecardSize.x * containerSizesOrig[_container.get_name()].x / _scorecardTxtureSizeOrig.x
+		var _newContainerYsize = _scorecardSize.y * containerSizesOrig[_container.get_name()].y  / _scorecardTxtureSizeOrig.y
 		_container.set_size(Vector2(_newContainerXsize, _newContainerYsize))
-	var _newContainerSize = _buttoncontainers[0].get_size()
-	var _newCheckboxXSize = _newContainerSize.x  * _checkboxSizeOrig.x / _buttonContainerSizeOrig.x
-	var _newCheckboxYSize = _newContainerSize.y * _checkboxSizeOrig.y / _buttonContainerSizeOrig.y
-	for _checkbox in _checkboxes:
-		_checkbox.set_size(Vector2(_newCheckboxXSize,_newCheckboxYSize))
-		pass
-	#_buttonContainer.set_size(Vector2(_newXsize, _newYsize))
-	#_buttonContainer.set_position()
-	var _newContainerPosX = _buttonContainerPosOrig.x * _newContainerXsize / _buttonContainerSizeOrig.x 
-	var _newContainerPosY = _buttonContainerPosOrig.y * _newContainerYsize / _buttonContainerSizeOrig.y 
-	for _container in _buttoncontainers:
+		var _newContainerPosX = containerPosOrig[_container.get_name()].x * _newContainerXsize / _buttonContainerSizeOrig.x 
+		var _newContainerPosY = containerPosOrig[_container.get_name()].y * _newContainerYsize / _buttonContainerSizeOrig.y 
 		_container.set_position(Vector2(_newContainerPosX,_newContainerPosY))
-	pass
-	
+	for _checkbox in _checkboxes:
+		var _parent = _checkbox.get_parent()
+		if _parent is HBoxContainer:
+			var _newCheckboxXSize = _parent.get_size().x * _checkboxSizeOrig.x / containerSizesOrig[_parent.get_name()].x
+			var _newCheckboxYSize = _parent.get_size().y * _checkboxSizeOrig.y / containerSizesOrig[_parent.get_name()].y
+			_checkbox.set_size(Vector2(_newCheckboxXSize,_newCheckboxYSize))
+		elif _parent is Button:
+			_checkbox.set_size(Vector2(_parent.get_size().x, _parent.get_size().y))
+
+
+
 
 func _on_scorecard_resized():
 	scale_reposition()
 	pass
-
-func _checkToggled(sender):
-	
-	pass
 	
 func _button_pressed(which):
 	print("Button was pressed: ", which.get_name())
-	var _sentby = which.get_name()
-	var _check = which.get_node("check")
+	_toggle(which)
+	
+func _toggle(sentby):
+	var _sentby = sentby.get_name()
+	var _check = sentby.get_node("check")
 	if _check.is_visible():
-		#if(!toggled.has(sender)):
 		toggled[_sentby] = false
 		_check.hide()
 	else:
-		#if(!toggled.has(sender)):
 		toggled[_sentby] = true
 		_check.show()
-	print(str(toggled))
 	

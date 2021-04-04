@@ -53,7 +53,7 @@ func loaddice():
 	for _side in range(1,7):
 		for _color in dColorArr:
 			var _dicename = str(_side) + _color
-			print(_dicename)
+			#print(_dicename)
 			var _path = "res://img/side" + _dicename + ".png"
 			dice[_dicename] = load(_path)
 
