@@ -8,7 +8,7 @@
 
 [node name="Scorecard" type="MarginContainer"]
 margin_right = 872.0
-margin_bottom = 551.0
+margin_bottom = 549.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 2 )
@@ -18,12 +18,12 @@ __meta__ = {
 
 [node name="scorecard" type="TextureRect" parent="."]
 margin_right = 872.0
-margin_bottom = 551.0
+margin_bottom = 549.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 1 )
 expand = true
-stretch_mode = 5
+stretch_mode = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -406,7 +406,7 @@ __meta__ = {
 "checkboxes",
 ]]
 margin_right = 63.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -436,7 +436,7 @@ __meta__ = {
 ]]
 margin_left = 67.0
 margin_right = 131.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -465,7 +465,7 @@ __meta__ = {
 ]]
 margin_left = 135.0
 margin_right = 198.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -494,7 +494,7 @@ __meta__ = {
 ]]
 margin_left = 202.0
 margin_right = 266.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -523,7 +523,7 @@ __meta__ = {
 ]]
 margin_left = 270.0
 margin_right = 333.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -552,7 +552,7 @@ __meta__ = {
 ]]
 margin_left = 337.0
 margin_right = 401.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -581,7 +581,7 @@ __meta__ = {
 ]]
 margin_left = 405.0
 margin_right = 468.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -610,7 +610,7 @@ __meta__ = {
 ]]
 margin_left = 472.0
 margin_right = 536.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -639,7 +639,7 @@ __meta__ = {
 ]]
 margin_left = 540.0
 margin_right = 603.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -668,7 +668,7 @@ __meta__ = {
 ]]
 margin_left = 607.0
 margin_right = 671.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -697,7 +697,7 @@ __meta__ = {
 ]]
 margin_left = 675.0
 margin_right = 738.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -726,7 +726,7 @@ __meta__ = {
 ]]
 margin_left = 742.0
 margin_right = 806.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -767,7 +767,7 @@ __meta__ = {
 "checkboxes",
 ]]
 margin_right = 63.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -797,7 +797,7 @@ __meta__ = {
 ]]
 margin_left = 67.0
 margin_right = 131.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -826,7 +826,7 @@ __meta__ = {
 ]]
 margin_left = 135.0
 margin_right = 198.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -855,7 +855,7 @@ __meta__ = {
 ]]
 margin_left = 202.0
 margin_right = 266.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -884,7 +884,7 @@ __meta__ = {
 ]]
 margin_left = 270.0
 margin_right = 333.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -913,7 +913,7 @@ __meta__ = {
 ]]
 margin_left = 337.0
 margin_right = 401.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -942,7 +942,7 @@ __meta__ = {
 ]]
 margin_left = 405.0
 margin_right = 468.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -971,7 +971,7 @@ __meta__ = {
 ]]
 margin_left = 472.0
 margin_right = 536.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -1000,7 +1000,7 @@ __meta__ = {
 ]]
 margin_left = 540.0
 margin_right = 603.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -1029,7 +1029,7 @@ __meta__ = {
 ]]
 margin_left = 607.0
 margin_right = 671.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -1058,7 +1058,7 @@ __meta__ = {
 ]]
 margin_left = 675.0
 margin_right = 738.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -1087,7 +1087,7 @@ __meta__ = {
 ]]
 margin_left = 742.0
 margin_right = 806.0
-margin_bottom = 64.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/hover = ExtResource( 3 )
@@ -1471,8 +1471,138 @@ stretch_mode = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="NonScoredButtonContainer" type="HBoxContainer" parent="scorecard" groups=[
+"buttoncontainers",
+]]
+margin_left = 710.0
+margin_top = 410.0
+margin_right = 850.0
+margin_bottom = 450.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckBox1NoScore" type="CheckBox" parent="scorecard/NonScoredButtonContainer" groups=[
+"checkboxes",
+]]
+margin_right = 32.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/hover_pressed = ExtResource( 3 )
+custom_styles/normal = ExtResource( 5 )
+expand_icon = true
+
+[node name="check" type="TextureRect" parent="scorecard/NonScoredButtonContainer/CheckBox1NoScore" groups=[
+"checkboxes",
+]]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckBox2NoScore" type="CheckBox" parent="scorecard/NonScoredButtonContainer" groups=[
+"checkboxes",
+]]
+margin_left = 36.0
+margin_right = 68.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 5 )
+expand_icon = true
+
+[node name="check" type="TextureRect" parent="scorecard/NonScoredButtonContainer/CheckBox2NoScore" groups=[
+"checkboxes",
+]]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckBox3NoScore" type="CheckBox" parent="scorecard/NonScoredButtonContainer" groups=[
+"checkboxes",
+]]
+margin_left = 72.0
+margin_right = 104.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 5 )
+expand_icon = true
+
+[node name="check" type="TextureRect" parent="scorecard/NonScoredButtonContainer/CheckBox3NoScore" groups=[
+"checkboxes",
+]]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckBox4NoScore" type="CheckBox" parent="scorecard/NonScoredButtonContainer" groups=[
+"checkboxes",
+]]
+margin_left = 108.0
+margin_right = 140.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 5 )
+expand_icon = true
+
+[node name="check" type="TextureRect" parent="scorecard/NonScoredButtonContainer/CheckBox4NoScore" groups=[
+"checkboxes",
+]]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="resized" from="scorecard" to="." method="_on_scorecard_resized"]
 [connection signal="toggled" from="scorecard/BlueButtonContainer/CheckBox5Blue" to="." method="_on_CheckBox5Blue_toggled"]
 [connection signal="toggled" from="scorecard/OrangeButtonContainer/CheckBox5Orange" to="." method="_on_CheckBox5Blue_toggled"]
 [connection signal="toggled" from="scorecard/YellowButtonContainer/CheckBox5Yellow" to="." method="_on_CheckBox5Blue_toggled"]
 [connection signal="toggled" from="scorecard/PurpleButtonContainer/CheckBox5Purple" to="." method="_on_CheckBox5Blue_toggled"]
+[connection signal="toggled" from="scorecard/NonScoredButtonContainer/CheckBox4NoScore" to="." method="_on_CheckBox5Blue_toggled"]

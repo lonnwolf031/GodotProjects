@@ -1,0 +1,17 @@
+fixed_height = 420
+image = Image.open('1.jpeg')
+height_percent = (fixed_height / float(image.size[1]))
+width_size = int((float(image.size[0]) * float(height_percent)))
+
+target_ratio = target_height / target_width
+    im_ratio = im.height / im.width
+    if target_ratio > im_ratio:
+        # It must be fixed by width
+        resize_width = target_width
+        resize_height = round(resize_width * im_ratio)
+    else:
+        # Fixed by height
+        resize_height = target_height
+        resize_width = round(resize_height / im_ratio)
+
+    image_resize = im.resize((resize_width, resize_height), Image.ANTIALIAS)
