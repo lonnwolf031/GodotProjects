@@ -34,8 +34,11 @@ func scale_reposition():
 	var _scorecardSize = _scorecardTxture.get_size() #returns Vector2
 	print("get size: ", str(_scorecardTxture.get_size()))
 	for _container in _buttoncontainers:
-		var _newContainerXsize = _scorecardSize.x * containerSizesOrig[_container.get_name()].x / _scorecardTxtureSizeOrig.x
-		var _newContainerYsize = _scorecardSize.y * containerSizesOrig[_container.get_name()].y  / _scorecardTxtureSizeOrig.y
+		#var _newContainerXsize = _scorecardSize.x * containerSizesOrig[_container.get_name()].x / _scorecardTxtureSizeOrig.x
+		#var _newContainerYsize = _scorecardSize.y * containerSizesOrig[_container.get_name()].y  / _scorecardTxtureSizeOrig.y
+		var _new_Container_sizes = resize_container_by_ratio(_container)
+		var _newContainerXsize = _new_Container_sizes.x
+		var _newContainerYsize = _new_Container_sizes.y
 		_container.set_size(Vector2(_newContainerXsize, _newContainerYsize))
 		#var _newContainerXsize = resize_values_by_ratio(target_size, image_size).x
 		#var _newContainerYsize resize_values_by_ratio(target_size, image_size).y
@@ -52,20 +55,32 @@ func scale_reposition():
 		elif _parent is Button:
 			_checkbox.set_size(Vector2(_parent.get_size().x, _parent.get_size().y))
 
-func resize_values_by_ratio(scorecard_orig_size, scorecard_new_size, image_size):
-	var resize_width
-	var resize_height
-	var scorecard_orig_ratio = scorecard_orig_size.y / scorecard_orig_size.x
-	var scorecard_scale = scorecard_new_size.y / scorecard_orig_size.y
+func resize_values_by_ratio(scorecard_new_size, element_size):
+	var scorecard_orig_ratio = _scorecardTxtureSizeOrig.y / _scorecardTxtureSizeOrig.x
+	var scorecard_new_ratio = scorecard_new_size.y / scorecard_new_size.x
+	var scorecard_scale_y = scorecard_new_size.y / _scorecardTxtureSizeOrig.y
 	# check ratios, compare, return right values
-	if scorecard_ratio > im_ratio:
-		# It must be fixed by width
-		resize_width = scorecard_size.x
-		resize_height = resize_width * im_ratio
+	# if element.x > element.y > ratio * largest
+	var resize_width = scorecard_scale_y * element_size.x
+	var resize_height = scorecard_new_ratio * scorecard_scale_y * element_size.y
+	return Vector2(resize_width, resize_height)
+
+func resize_container_by_ratio(component):
+	var ratio
+	var resize_width 
+	var resize_height 
+	var _orign_size = containerSizesOrig[component.get_name()]
+	var scale = _scorecardTxture.get_size().x / _scorecardTxtureSizeOrig.x
+	if (_orign_size.x > _orign_size.y):
+		ratio = _orign_size.y / _orign_size.x
+		resize_width = scale * containerSizesOrig[component.get_name()].x
+		resize_height = scale * ratio * containerSizesOrig[component.get_name()].x 
 	else:
-		# Fixed by height
-		resize_height = scorecard_size.x
-		resize_width = resize_height / im_ratio
+		ratio = _orign_size.x / _orign_size.y
+		resize_width = scale * ratio * containerSizesOrig[component.get_name()].y
+		resize_height = scale * containerSizesOrig[component.get_name()].y 
+	
+
 	return Vector2(resize_width, resize_height)
 
 func _on_scorecard_resized():
