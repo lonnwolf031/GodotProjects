@@ -9,6 +9,8 @@ onready var _checkboxes = get_tree().get_nodes_in_group("checkboxes")
 onready var _buttoncontainers = get_tree().get_nodes_in_group("buttoncontainers")
 onready var _buttonContainerPosOrig = _buttoncontainers[0].get_position()
 onready var _buttonContainerSizeOrig = _buttoncontainers[0].get_size()
+onready var _buttonContainerNoScorePosOrig = $scorecard/NonScoredButtonContainer.get_position()
+onready var _buttonContainerNoScoreSizeOrig = $scorecard/NonScoredButtonContainer.get_size()
 onready var _checkboxSizeOrig = _checkboxes[0].get_size()
 
 var toggled = {}
@@ -31,39 +33,37 @@ func _ready():
 
 
 func scale_reposition():
-	var _scorecardSize = _scorecardTxture.get_size() #returns Vector2
-	print("get size: ", str(_scorecardTxture.get_size()))
+	var _newContainerPosX
+	var _newContainerPosY
+	var _scorecardSize = _scorecardTxture.get_size() 
 	for _container in _buttoncontainers:
-		#var _newContainerXsize = _scorecardSize.x * containerSizesOrig[_container.get_name()].x / _scorecardTxtureSizeOrig.x
-		#var _newContainerYsize = _scorecardSize.y * containerSizesOrig[_container.get_name()].y  / _scorecardTxtureSizeOrig.y
 		var _new_Container_sizes = resize_container_by_ratio(_container)
 		var _newContainerXsize = _new_Container_sizes.x
 		var _newContainerYsize = _new_Container_sizes.y
 		_container.set_size(Vector2(_newContainerXsize, _newContainerYsize))
-		#var _newContainerXsize = resize_values_by_ratio(target_size, image_size).x
-		#var _newContainerYsize resize_values_by_ratio(target_size, image_size).y
-		#_container.set_size()
-		var _newContainerPosX = containerPosOrig[_container.get_name()].x * _newContainerXsize / _buttonContainerSizeOrig.x 
-		var _newContainerPosY = containerPosOrig[_container.get_name()].y * _newContainerYsize / _buttonContainerSizeOrig.y 
+		if (_container.get_name() == "NonScoredButtonContainer"):
+			_newContainerPosX = _buttonContainerNoScorePosOrig.x * _newContainerXsize / _buttonContainerNoScoreSizeOrig.x
+			_newContainerPosY = _buttonContainerNoScorePosOrig.y * _newContainerYsize / _buttonContainerNoScoreSizeOrig.y
+		else:
+			_newContainerPosX = containerPosOrig[_container.get_name()].x * _newContainerXsize / _buttonContainerSizeOrig.x 
+			_newContainerPosY = containerPosOrig[_container.get_name()].y * _newContainerYsize / _buttonContainerSizeOrig.y 
 		_container.set_position(Vector2(_newContainerPosX,_newContainerPosY))
 	for _checkbox in _checkboxes:
 		var _parent = _checkbox.get_parent()
-		if _parent is HBoxContainer:
+		if _parent is HBoxContainer and _parent.get_name() == "NonScoredButtonContainer":
+			print("noscore accessed")
+			var _newCheckboxXSize = _parent.get_size().x * _checkboxSizeOrig.x / _buttonContainerNoScoreSizeOrig.x
+			var _newCheckboxYSize = _parent.get_size().y * _checkboxSizeOrig.y / _buttonContainerNoScoreSizeOrig.y
+			_checkbox.set_size(Vector2(_newCheckboxXSize,_newCheckboxYSize))
+			print("non scored ", str(Vector2(_newCheckboxXSize,_newCheckboxYSize)))
+		elif _parent is HBoxContainer:
 			var _newCheckboxXSize = _parent.get_size().x * _checkboxSizeOrig.x / containerSizesOrig[_parent.get_name()].x
 			var _newCheckboxYSize = _parent.get_size().y * _checkboxSizeOrig.y / containerSizesOrig[_parent.get_name()].y
 			_checkbox.set_size(Vector2(_newCheckboxXSize,_newCheckboxYSize))
 		elif _parent is Button:
+			print("parent ", str(_parent.get_size()))
 			_checkbox.set_size(Vector2(_parent.get_size().x, _parent.get_size().y))
-
-func resize_values_by_ratio(scorecard_new_size, element_size):
-	var scorecard_orig_ratio = _scorecardTxtureSizeOrig.y / _scorecardTxtureSizeOrig.x
-	var scorecard_new_ratio = scorecard_new_size.y / scorecard_new_size.x
-	var scorecard_scale_y = scorecard_new_size.y / _scorecardTxtureSizeOrig.y
-	# check ratios, compare, return right values
-	# if element.x > element.y > ratio * largest
-	var resize_width = scorecard_scale_y * element_size.x
-	var resize_height = scorecard_new_ratio * scorecard_scale_y * element_size.y
-	return Vector2(resize_width, resize_height)
+			print("size set ", str(_checkbox.get_size()))
 
 func resize_container_by_ratio(component):
 	var ratio
@@ -79,8 +79,6 @@ func resize_container_by_ratio(component):
 		ratio = _orign_size.x / _orign_size.y
 		resize_width = scale * ratio * containerSizesOrig[component.get_name()].y
 		resize_height = scale * containerSizesOrig[component.get_name()].y 
-	
-
 	return Vector2(resize_width, resize_height)
 
 func _on_scorecard_resized():
