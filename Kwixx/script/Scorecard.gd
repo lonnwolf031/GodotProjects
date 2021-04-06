@@ -24,6 +24,10 @@ func _ready():
 		checkboxSizes[_c.get_name()] = _c.get_size()
 		if _c is Button:
 			_c.connect("pressed", self, "_button_pressed",[_c])
+			var _check = _c.get_node("check")
+			if _check.is_visible():
+				toggled[_c] = false
+				_check.hide()
 	for _container in _buttoncontainers:
 		containerSizesOrig[_container.get_name()] = _container.get_size()
 		containerPosOrig[_container.get_name()] = _container.get_position()
@@ -60,7 +64,6 @@ func scale_reposition():
 		elif _parent is Button and "NoScore" in _parent.get_name():
 			var _newCheckboxXSize = _parent.get_size().x * _checkboxSizeOrig.x / _buttonContainerNoScoreSizeOrig.x
 			var _newCheckboxYSize = _parent.get_size().y * _checkboxSizeOrig.y / (_buttonContainerNoScoreSizeOrig.y * 3)
-			print("size orig ",str(_buttonContainerNoScoreSizeOrig))
 			_checkbox.set_size(Vector2(_newCheckboxXSize,_newCheckboxYSize))
 		elif _parent is Button and not "NoScore" in _parent.get_name():
 			_checkbox.set_size(Vector2(_parent.get_size().x, _parent.get_size().y))
@@ -86,9 +89,7 @@ func _on_scorecard_resized():
 	pass
 	
 func _button_pressed(which):
-	print("Button was pressed: ", which.get_name())
 	_toggle(which)
-	print("on click ", str(_scorecardTxture.get_size()))
 	
 func _toggle(sentby):
 	var _sentby = sentby.get_name()

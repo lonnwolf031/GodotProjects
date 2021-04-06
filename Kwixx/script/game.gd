@@ -14,6 +14,7 @@ var _players = []
 var _playersDict = {}
 var _turn = -1
 var dice = {}
+var scorecards = {}
 
 var cPurple = Color("#8f02ed")
 var cBlue = Color("#02beed")
@@ -45,15 +46,10 @@ master func request_action(action):
 	do_action(action)
 	next_turn()
 	
-	var _dice = preload("res://img/side1.png")
-
-var _side1 = preload("res://img/side1.png")
-
 func loaddice():
 	for _side in range(1,7):
 		for _color in dColorArr:
 			var _dicename = str(_side) + _color
-			#print(_dicename)
 			var _path = "res://img/side" + _dicename + ".png"
 			dice[_dicename] = load(_path)
 
@@ -83,8 +79,6 @@ func shuffleList(list):
 
 # HERE GOES ACTION WITH THE TURN
 sync func do_action(action):
-	# differntiate between sender and others for possible actions
-	# roll dice
 	rollDice()
 	#var name = _list.get_item_text(_turn)
 	var val = randi() % 100
@@ -95,7 +89,7 @@ sync func set_turn(turn):
 	_turn = turn
 	if turn >= _players.size():
 		return
-	for i in range(0, _players.size()):
+	for i in range(0, _playersDict.size()):
 		if i == turn:
 			#_list.set_item_icon(i, _crown)
 			pass
@@ -117,26 +111,34 @@ sync func del_player(id):
 		rpc("set_turn", _turn)
 
 
+
 sync func add_player(id, name=""):
 	_players.append(id)
 	#var _newPlayer = Player.new(id, name)
-	var _newPlayer = preload("res://scene/Player.tscn")
-	var newPlayer = _newPlayer.instance()
-	_playersDict[id] = newPlayer
+	#var _newPlayer = preload("res://scene/Player.tscn")
+	#var newPlayer = _newPlayer.instance()
+	var newplayer = KwixxPlayer.new()
+	newplayer.id = id
+	newplayer.name  = name
+	_playersDict[id] = newplayer
 	if name == "":
 		name = "unknown"
-	newPlayer.set_name(str(id))
 	var _newPanel = PanelContainer.new()
-	_newPanel.set_name(name)
+	_newPanel.set_name(newplayer.name)
 	_newPanel.set_size(Vector2(200, 200),false)  
 	_tablist.add_child(_newPanel)
-	_newPanel.add_child(newPlayer)
 	var _newScorecard = preload("res://scene/Scorecard.tscn")
 	var newScorecard = _newScorecard.instance()
 	newScorecard.set_name(str(id))
 	newScorecard.find_node("scorecard").set_expand(true)
 	newScorecard.find_node("scorecard").set_stretch_mode(5)
+	scorecards[id] = newScorecard
 	_newPanel.add_child(newScorecard)
+
+class KwixxPlayer:
+	var id: int
+	var name: String
+	var scores: Scores
 
 func next_turn():
 	_turn += 1
@@ -183,3 +185,14 @@ func _on_Action_pressed():
 		next_turn()
 	else:
 		rpc_id(1, "request_action", "roll")
+		
+func _playByRulesRolledDice(player):
+	var playercard = scorecards[player.id]
+	#disable non clickable options on card based on dice in dice array
+	pass
+	
+func _playByRulesOthers(player):
+	var playercard = scorecards[player.id]
+	#disable non clickable options on card based on dice in dice array
+	pass
+	
