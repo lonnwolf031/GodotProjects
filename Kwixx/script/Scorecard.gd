@@ -29,8 +29,6 @@ func _ready():
 		containerPosOrig[_container.get_name()] = _container.get_position()
 	#untoggle all childs of button container
 	scale_reposition()
-	print("at start ", str(_scorecardTxture.get_size()))
-
 
 func scale_reposition():
 	var _newContainerPosX
@@ -51,19 +49,21 @@ func scale_reposition():
 	for _checkbox in _checkboxes:
 		var _parent = _checkbox.get_parent()
 		if _parent is HBoxContainer and _parent.get_name() == "NonScoredButtonContainer":
-			print("noscore accessed")
 			var _newCheckboxXSize = _parent.get_size().x * _checkboxSizeOrig.x / _buttonContainerNoScoreSizeOrig.x
 			var _newCheckboxYSize = _parent.get_size().y * _checkboxSizeOrig.y / _buttonContainerNoScoreSizeOrig.y
 			_checkbox.set_size(Vector2(_newCheckboxXSize,_newCheckboxYSize))
-			print("non scored ", str(Vector2(_newCheckboxXSize,_newCheckboxYSize)))
 		elif _parent is HBoxContainer:
 			var _newCheckboxXSize = _parent.get_size().x * _checkboxSizeOrig.x / containerSizesOrig[_parent.get_name()].x
 			var _newCheckboxYSize = _parent.get_size().y * _checkboxSizeOrig.y / containerSizesOrig[_parent.get_name()].y
+			#var _new_Container_sizes = resize_container_by_ratio(_checkbox)
 			_checkbox.set_size(Vector2(_newCheckboxXSize,_newCheckboxYSize))
-		elif _parent is Button:
-			print("parent ", str(_parent.get_size()))
+		elif _parent is Button and "NoScore" in _parent.get_name():
+			var _newCheckboxXSize = _parent.get_size().x * _checkboxSizeOrig.x / _buttonContainerNoScoreSizeOrig.x
+			var _newCheckboxYSize = _parent.get_size().y * _checkboxSizeOrig.y / (_buttonContainerNoScoreSizeOrig.y * 3)
+			print("size orig ",str(_buttonContainerNoScoreSizeOrig))
+			_checkbox.set_size(Vector2(_newCheckboxXSize,_newCheckboxYSize))
+		elif _parent is Button and not "NoScore" in _parent.get_name():
 			_checkbox.set_size(Vector2(_parent.get_size().x, _parent.get_size().y))
-			print("size set ", str(_checkbox.get_size()))
 
 func resize_container_by_ratio(component):
 	var ratio
