@@ -3,7 +3,6 @@ extends Control
 # add toggle trigger stuff
 
 onready var _scorecardTxture = $scorecard
-#onready var _buttonContainer = $scorecard/BlueButtonContainer
 onready var _scorecardTxtureSizeOrig = _scorecardTxture.get_size()
 onready var _checkboxes = get_tree().get_nodes_in_group("checkboxes")
 onready var _buttoncontainers = get_tree().get_nodes_in_group("buttoncontainers")
@@ -101,3 +100,7 @@ func _toggle(sentby):
 		toggled[_sentby] = true
 		_check.show()
 	
+func _disableCheckbox(_checkbox):
+	if _checkbox is Button:
+		_checkbox.disabled = true
+	pass

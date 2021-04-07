@@ -187,12 +187,51 @@ func _on_Action_pressed():
 		rpc_id(1, "request_action", "roll")
 		
 func _playByRulesRolledDice(player):
+	var _whitesum = 0
+	var _whiteopts = []
+	var _purpleopts = []
+	var _orangeopts = []
+	var _yellowopts = []
+	var _blueopts = []
 	var playercard = scorecards[player.id]
+	for _die in diceArr:
+		if "white" in _die.get_name():
+			for _i in range(1,7):
+				if _i in _die.get_name():
+					_whitesum += _i
+					_whiteopts.append(_i)
+		if "purple" in _die.get_name():
+			for _i in range(1,7):
+				if _i in _die.get_name():
+					_purpleopts.append(_i)
+		if "orange" in _die.get_name():
+			for _i in range(1,7):
+				if _i in _die.get_name():
+					_orangeopts.append(_i)
+		if "yellow" in _die.get_name():
+			for _i in range(1,7):
+				if _i in _die.get_name():
+					_yellowopts.append(_i)
+		if "blue" in _die.get_name():
+			for _i in range(1,7):
+				if _i in _die.get_name():
+					_blueopts.append(_i)
+		# get all checkboxes
+		# disable all
+		# loop through checkboxes
+			# enable options , store clicked
+		
 	#disable non clickable options on card based on dice in dice array
 	pass
 	
 func _playByRulesOthers(player):
 	var playercard = scorecards[player.id]
+	var _whitesum = 0
+	for _die in diceArr:
+		if "white" in _die.get_name():
+			for _i in range(1,7):
+				if _i in _die.get_name():
+					_whitesum += _i
 	#disable non clickable options on card based on dice in dice array
 	pass
 	
