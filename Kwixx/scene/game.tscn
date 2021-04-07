@@ -34,26 +34,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
-margin_right = 488.0
+[node name="RichTextLabel" type="PanelContainer" parent="VBoxContainer/HBoxContainer"]
+margin_right = 490.0
 margin_bottom = 397.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainerLeft" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
-margin_left = 492.0
-margin_right = 492.0
-margin_bottom = 397.0
-
 [node name="SubVBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
-margin_left = 496.0
+margin_left = 494.0
 margin_right = 984.0
 margin_bottom = 397.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Action" type="Button" parent="VBoxContainer/HBoxContainer/SubVBoxContainer"]
-margin_right = 488.0
+margin_right = 490.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 disabled = true
@@ -61,13 +56,13 @@ text = "Do Action!"
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SubVBoxContainer"]
 margin_top = 24.0
-margin_right = 488.0
+margin_right = 490.0
 margin_bottom = 38.0
 text = "Players:"
 
 [node name="Tabs" type="TabContainer" parent="VBoxContainer/HBoxContainer/SubVBoxContainer"]
 margin_top = 42.0
-margin_right = 488.0
+margin_right = 490.0
 margin_bottom = 397.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

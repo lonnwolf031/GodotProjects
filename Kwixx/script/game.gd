@@ -41,7 +41,7 @@ sync func update_player_name(player, _name):
 master func request_action(action):
 	var sender = get_tree().get_rpc_sender_id()
 	if _players[_turn] != get_tree().get_rpc_sender_id():
-		rpc("_log", "Someone is trying to cheat! %s" % str(sender))
+		#rpc("_log", "Someone is trying to cheat! %s" % str(sender))
 		return
 	do_action(action)
 	next_turn()
@@ -62,7 +62,10 @@ func rollDice():
 		# check if indeed is BETWEEN 0 and 7, otherwise +1
 		var _nodeName = "dice" + str(_numdice)
 		var _dice = _dicecontainer.find_node(_nodeName)
+		print(_dice.get_name())
+		# below: second roll got index 0 from arr
 		var _rolledDiceName = str(_num) + _shuffledColorArr[_numdice-1]
+
 		var _rolledDiceTextureName = "side" + _rolledDiceName
 		diceArr.append(_rolledDiceName)
 		_dice.texture = dice[_rolledDiceName]
@@ -79,10 +82,11 @@ func shuffleList(list):
 
 # HERE GOES ACTION WITH THE TURN
 sync func do_action(action):
+	#check if turn
 	rollDice()
 	#var name = _list.get_item_text(_turn)
 	var val = randi() % 100
-	rpc("_log", "%s: %ss %d" % [name, action, val])
+	#rpc("_log", "%s: %ss %d" % [name, action, val])
 
 
 sync func set_turn(turn):
@@ -91,9 +95,11 @@ sync func set_turn(turn):
 		return
 	for i in range(0, _playersDict.size()):
 		if i == turn:
+			#_playByRulesRolledDice()
 			#_list.set_item_icon(i, _crown)
 			pass
 		else:
+			#_playByRulesOthers()
 			#_list.set_item_icon(i, null)
 			pass
 	_action.disabled = _players[turn] != get_tree().get_network_unique_id()
@@ -173,11 +179,6 @@ func on_peer_del(id):
 	if not get_tree().is_network_server():
 		return
 	rpc("del_player", id)
-
-
-sync func _log(what):
-	$VBoxContainer/HBoxContainer/RichTextLabel.add_text(what + "\n")
-
 
 func _on_Action_pressed():
 	if get_tree().is_network_server():
