@@ -28,6 +28,8 @@ var diceArr = []
 
 const NUMDICES = 6
 
+var clicked = false
+
 master func set_player_name(name):
 	var sender = get_tree().get_rpc_sender_id()
 	rpc("update_player_name", sender, name)
@@ -44,6 +46,7 @@ master func request_action(action):
 		#rpc("_log", "Someone is trying to cheat! %s" % str(sender))
 		return
 	do_action(action)
+
 	next_turn()
 	
 func loaddice():
@@ -64,13 +67,15 @@ func rollDice():
 		var _dice = _dicecontainer.find_node(_nodeName)
 		print(_dice.get_name())
 		# below: second roll got index 0 from arr
+		print(str(_shuffledColorArr))
 		var _rolledDiceName = str(_num) + _shuffledColorArr[_numdice-1]
-
 		var _rolledDiceTextureName = "side" + _rolledDiceName
 		diceArr.append(_rolledDiceName)
 		_dice.texture = dice[_rolledDiceName]
+	
 
-func shuffleList(list):
+func shuffleList(originallist):
+	var list = [] + originallist
 	var shuffledList = []
 	var indexList = range(list.size())
 	for _i in range(list.size()):
@@ -84,8 +89,8 @@ func shuffleList(list):
 sync func do_action(action):
 	#check if turn
 	rollDice()
+	clicked = true
 	#var name = _list.get_item_text(_turn)
-	var val = randi() % 100
 	#rpc("_log", "%s: %ss %d" % [name, action, val])
 
 
@@ -95,14 +100,21 @@ sync func set_turn(turn):
 		return
 	for i in range(0, _playersDict.size()):
 		if i == turn:
+			_action.disabled = false
 			#_playByRulesRolledDice()
 			#_list.set_item_icon(i, _crown)
 			pass
 		else:
+			
 			#_playByRulesOthers()
 			#_list.set_item_icon(i, null)
 			pass
-	_action.disabled = _players[turn] != get_tree().get_network_unique_id()
+	if _players[turn] != get_tree().get_network_unique_id():
+		_action.disabled = true
+	elif clicked == true:
+		_action.disabled = true
+	else:
+		_action.disabled = false
 
 
 sync func del_player(id):
@@ -144,9 +156,11 @@ sync func add_player(id, name=""):
 class KwixxPlayer:
 	var id: int
 	var name: String
+	# make new Scores instance
 	var scores: Scores
 
 func next_turn():
+	clicked = false
 	_turn += 1
 	if _turn >= _players.size():
 		_turn = 0
@@ -183,6 +197,8 @@ func on_peer_del(id):
 func _on_Action_pressed():
 	if get_tree().is_network_server():
 		do_action("roll")
+		_action.set_disabled(true)
+		#disable button
 		next_turn()
 	else:
 		rpc_id(1, "request_action", "roll")
