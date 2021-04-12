@@ -102,10 +102,8 @@ sync func set_turn(turn):
 		if i == turn:
 			_action.disabled = false
 			#_playByRulesRolledDice()
-			#_list.set_item_icon(i, _crown)
 			pass
 		else:
-			
 			#_playByRulesOthers()
 			#_list.set_item_icon(i, null)
 			pass
@@ -197,6 +195,7 @@ func on_peer_del(id):
 func _on_Action_pressed():
 	if get_tree().is_network_server():
 		do_action("roll")
+		print("roll is done")
 		_action.set_disabled(true)
 		#disable button
 		next_turn()
@@ -233,6 +232,10 @@ func _playByRulesRolledDice(player):
 			for _i in range(1,7):
 				if _i in _die.get_name():
 					_blueopts.append(_i)
+	for _cbox in playercard._checkboxes:
+		if _cbox is Button:
+			_cbox.set_disabled(true)
+		print(_cbox.get_name())
 		# get all checkboxes
 		# disable all
 		# loop through checkboxes
@@ -252,3 +255,14 @@ func _playByRulesOthers(player):
 	#disable non clickable options on card based on dice in dice array
 	pass
 	
+
+
+func _on_RollButton_pressed():
+	if get_tree().is_network_server():
+		do_action("roll")
+		print("roll is done")
+		#disable button
+		_action.set_disabled(true)
+		next_turn()
+	else:
+		rpc_id(1, "request_action", "roll")

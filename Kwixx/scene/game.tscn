@@ -141,3 +141,4 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Roll!"
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/SubVBoxContainer/Action" to="." method="_on_Action_pressed"]
+[connection signal="pressed" from="VBoxContainer/DiceContainer/RollButton" to="." method="_on_RollButton_pressed"]
