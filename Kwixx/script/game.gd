@@ -8,6 +8,7 @@ onready var _tablist = $VBoxContainer/HBoxContainer/SubVBoxContainer/Tabs
 onready var _action = $VBoxContainer/HBoxContainer/SubVBoxContainer/Action
 onready var _rolldice = $VBoxContainer/DiceContainer/RollButton
 onready var _dicecontainer = $VBoxContainer/DiceContainer
+onready var _owncardpanel = $VBoxContainer/HBoxContainer/leftpanel
 onready var dColorArr = ["purple", "blue", "orange", "yellow", "white", "white"]
 
 var _players = []
@@ -46,7 +47,6 @@ master func request_action(action):
 		#rpc("_log", "Someone is trying to cheat! %s" % str(sender))
 		return
 	do_action(action)
-
 	next_turn()
 	
 func loaddice():
@@ -100,20 +100,13 @@ sync func set_turn(turn):
 		return
 	for i in range(0, _playersDict.size()):
 		if i == turn:
-			_action.disabled = false
+			rpc_id(i,"enable_rollbutton()")
 			#_playByRulesRolledDice()
 			pass
 		else:
 			#_playByRulesOthers()
-			#_list.set_item_icon(i, null)
+			rpc_id(i,"disable_rollbutton()")
 			pass
-	if _players[turn] != get_tree().get_network_unique_id():
-		_action.disabled = true
-	elif clicked == true:
-		_action.disabled = true
-	else:
-		_action.disabled = false
-
 
 sync func del_player(id):
 	var pos = _players.find(id)
@@ -150,6 +143,17 @@ sync func add_player(id, name=""):
 	newScorecard.find_node("scorecard").set_stretch_mode(5)
 	scorecards[id] = newScorecard
 	_newPanel.add_child(newScorecard)
+	# rpc id add scorecard to thing
+	#rpc_id(id,"_showOwnScorecard()",id)
+
+	
+puppetsync func _show_own_scorecard(id):
+	_owncardpanel.add_child(scorecards[id])
+	pass
+	
+func _showOwnScorecard(id):
+	_owncardpanel.add_child(scorecards[id])
+	pass
 
 class KwixxPlayer:
 	var id: int
@@ -164,10 +168,24 @@ func next_turn():
 		_turn = 0
 	rpc("set_turn", _turn)
 
+func disable_rollbutton():
+	_action.disabled = true
+
+func enable_rollbutton():
+	_action.disabled = false
 
 func start():
 	set_turn(0)
 	loaddice()
+	if !is_network_master():
+		for peer in _players:
+			rpc_id(peer, "_show_own_scorecard(id)", peer)
+	elif is_network_master():
+		var _owncard = scorecards[1]
+		_owncard.set_name("mycard")
+		_owncardpanel.add_child(_owncard)
+		print_tree()
+		pass
 
 
 func stop():
@@ -196,7 +214,6 @@ func _on_Action_pressed():
 	if get_tree().is_network_server():
 		do_action("roll")
 		print("roll is done")
-		_action.set_disabled(true)
 		#disable button
 		next_turn()
 	else:
