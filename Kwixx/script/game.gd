@@ -10,6 +10,7 @@ onready var _rolldice = $VBoxContainer/DiceContainer/RollButton
 onready var _dicecontainer = $VBoxContainer/DiceContainer
 onready var _owncardpanel = $VBoxContainer/HBoxContainer/leftpanel
 onready var dColorArr = ["purple", "blue", "orange", "yellow", "white", "white"]
+onready var _newScorecard = preload("res://scene/Scorecard.tscn")
 
 var _players = []
 var _playersDict = {}
@@ -136,7 +137,7 @@ sync func add_player(id, name=""):
 	_newPanel.set_name(newplayer.name)
 	_newPanel.set_size(Vector2(200, 200),false)  
 	_tablist.add_child(_newPanel)
-	var _newScorecard = preload("res://scene/Scorecard.tscn")
+	#var _newScorecard = preload("res://scene/Scorecard.tscn")
 	var newScorecard = _newScorecard.instance()
 	newScorecard.set_name(str(id))
 	newScorecard.find_node("scorecard").set_expand(true)
@@ -152,7 +153,8 @@ puppetsync func _show_own_scorecard(id):
 	pass
 	
 func _showOwnScorecard(id):
-	_owncardpanel.add_child(scorecards[id])
+	var _anotherscorecard = _newScorecard.instance()
+	_owncardpanel.add_child(_anotherscorecard)
 	pass
 
 class KwixxPlayer:
@@ -181,10 +183,12 @@ func start():
 		for peer in _players:
 			rpc_id(peer, "_show_own_scorecard(id)", peer)
 	elif is_network_master():
-		var _owncard = scorecards[1]
-		_owncard.set_name("mycard")
+		#var _owncard = scorecards[1]
+		#_owncard.set_name("mycard")
+		var _owncard = _newScorecard.instance()
+		_owncard.find_node("scorecard").set_expand(true)
+		_owncard.find_node("scorecard").set_stretch_mode(5)
 		_owncardpanel.add_child(_owncard)
-		print_tree()
 		pass
 
 
